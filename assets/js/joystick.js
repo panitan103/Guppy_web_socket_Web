@@ -23,12 +23,14 @@ function connectWebSocket() {
     ws.onopen = () => {
         console.log('Connected to the WebSocket server.');
         document.getElementById('sendmessages').textContent = 'Connected to the WebSocket server.\n';
-        // Automatically send subscription data after connecting
+
+        // Send subscription data
         const data = {
             op: "subscribe",
             topic: "/Guppy_Received",
         };
         ws.send(JSON.stringify(data));
+        
         // Automatically send data in real-time
         sendRealTimeData();
     };
@@ -38,20 +40,19 @@ function connectWebSocket() {
         const receivedData = JSON.parse(event.data);
         console.log('Received:', receivedData);
 
-        // You can process the received data as needed
         const msg = receivedData.msg || {};
         const formattedReceivedData = `
             Topic=${receivedData.topic || 'N/A'},
-    Operation = ${receivedData.op || 'N/A'},
-    Roll = ${msg.roll || 'N/A'},
-    Pitch = ${msg.pitch || 'N/A'},
-    Yaw = ${msg.yaw || 'N/A'},
-    Depth = ${msg.depth || 'N/A'},
-    Amp = ${msg.amp || 'N/A'},
-    Volt = ${msg.volt || 'N/A'}
+            Operation=${receivedData.op || 'N/A'},
+            Roll=${msg.roll || 'N/A'},
+            Pitch=${msg.pitch || 'N/A'},
+            Yaw=${msg.yaw || 'N/A'},
+            Depth=${msg.depth || 'N/A'},
+            Amp=${msg.amp || 'N/A'},
+            Volt=${msg.volt || 'N/A'}
         `;
         
-        document.getElementById('receivedmessages').textContent = `Received: ${formattedReceivedData.trim()}\n`;
+        document.getElementById('receivedmessages').textContent += `Received: ${formattedReceivedData.trim()}\n`;
     };
 
     // Handle connection errors
@@ -89,25 +90,22 @@ function sendRealTimeData() {
         };
 
         ws.send(JSON.stringify(data));
-        // Format the values for display
         const formattedValues = `Surge=${data.msg.surge}, Sway=${data.msg.sway}, Heave=${data.msg.heave}, Yaw=${data.msg.yaw}, S1=${data.msg.s1}, S2=${data.msg.s2}, O1=${data.msg.o1}, O2=${data.msg.o2}, O3=${data.msg.o3}, O4=${data.msg.o4}`;
     
         document.getElementById('sendmessages').textContent = `Sent: ${formattedValues}`;
     }
 
-    // Continue sending data at a set interval
     requestAnimationFrame(sendRealTimeData);
 }
 
 // Function to update the joystick position and values
 function updateJoystick(stick, event, joystick) {
     const rect = joystick.getBoundingClientRect();
-    const offsetX = event.clientX - rect.left - rect.width / 2; // Centering the joystick
-    const offsetY = event.clientY - rect.top - rect.height / 2;  // Centering the joystick
+    const offsetX = event.clientX !== undefined ? event.clientX - rect.left - rect.width / 2 : event.touches[0].clientX - rect.left - rect.width / 2; // Centering the joystick
+    const offsetY = event.clientY !== undefined ? event.clientY - rect.top - rect.height / 2 : event.touches[0].clientY - rect.top - rect.height / 2;  // Centering the joystick
 
     const maxDistance = rect.width / 2 - stick.offsetWidth / 2;
 
-    // Limit movement within the joystick area
     const x = Math.max(-maxDistance, Math.min(maxDistance, offsetX));
     const y = Math.max(-maxDistance, Math.min(maxDistance, offsetY));
 
@@ -115,13 +113,11 @@ function updateJoystick(stick, event, joystick) {
     stick.style.top = `${y + maxDistance}px`;    // Centering the stick
 
     if (joystick === leftJoystick) {
-        // Calculate heave and yaw values based on joystick position
         heave = Math.round((-y / maxDistance) * 200); // Range -200 to 200
         yaw = Math.round((x / maxDistance) * 100); // Range -100 to 100
         heaveValue.textContent = heave;
         yawValue.textContent = yaw;
     } else if (joystick === rightJoystick) {
-        // Calculate surge and sway values based on joystick position
         sway = Math.round((x / maxDistance) * 200); // Range -200 to 200
         surge = Math.round((-y / maxDistance) * 200); // Range -200 to 200
         surgeValue.textContent = surge;
@@ -129,7 +125,7 @@ function updateJoystick(stick, event, joystick) {
     }
 }
 
-// Reset the stick position on mouse up
+// Reset the stick position on mouse/touch end
 function resetStick(stick) {
     stick.style.left = '50%'; // Reset to center
     stick.style.top = '50%';  // Reset to center
@@ -149,6 +145,21 @@ leftStick.onmousedown = (event) => {
     };
 };
 
+// Handle touch events for left joystick
+leftStick.ontouchstart = (event) => {
+    event.preventDefault(); // Prevent scrolling on touch devices
+    document.ontouchmove = (e) => updateJoystick(leftStick, e, leftJoystick);
+    document.ontouchend = () => {
+        resetStick(leftStick);
+        heave = 0; // Reset values on release
+        yaw = 0;   // Reset values on release
+        heaveValue.textContent = heave;
+        yawValue.textContent = yaw;
+        document.ontouchmove = null;
+        document.ontouchend = null;
+    };
+};
+
 // Handle mouse events for right joystick
 rightStick.onmousedown = (event) => {
     document.onmousemove = (e) => updateJoystick(rightStick, e, rightJoystick);
@@ -160,6 +171,21 @@ rightStick.onmousedown = (event) => {
         swayValue.textContent = sway;
         document.onmousemove = null;
         document.onmouseup = null;
+    };
+};
+
+// Handle touch events for right joystick
+rightStick.ontouchstart = (event) => {
+    event.preventDefault(); // Prevent scrolling on touch devices
+    document.ontouchmove = (e) => updateJoystick(rightStick, e, rightJoystick);
+    document.ontouchend = () => {
+        resetStick(rightStick);
+        surge = 0; // Reset values on release
+        sway = 0;  // Reset values on release
+        surgeValue.textContent = surge;
+        swayValue.textContent = sway;
+        document.ontouchmove = null;
+        document.ontouchend = null;
     };
 };
 
