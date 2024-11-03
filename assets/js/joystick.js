@@ -131,63 +131,49 @@ function resetStick(stick) {
     stick.style.top = '50%';  // Reset to center
 }
 
-// Handle mouse events for left joystick
-leftStick.onmousedown = (event) => {
-    document.onmousemove = (e) => updateJoystick(leftStick, e, leftJoystick);
+// Function to handle start of dragging
+function startDragging(stick, joystick, event) {
+    event.preventDefault(); // Prevent default touch behavior
+    document.onmousemove = (e) => updateJoystick(stick, e, joystick);
     document.onmouseup = () => {
-        resetStick(leftStick);
+        resetStick(stick);
         heave = 0; // Reset values on release
         yaw = 0;   // Reset values on release
         heaveValue.textContent = heave;
         yawValue.textContent = yaw;
-        document.onmousemove = null;
-        document.onmouseup = null;
+        cleanup();
     };
-};
+
+    document.ontouchmove = (e) => updateJoystick(stick, e, joystick);
+    document.ontouchend = () => {
+        resetStick(stick);
+        heave = 0; // Reset values on release
+        yaw = 0;   // Reset values on release
+        heaveValue.textContent = heave;
+        yawValue.textContent = yaw;
+        cleanup();
+    };
+}
+
+// Function to clean up event handlers
+function cleanup() {
+    document.onmousemove = null;
+    document.onmouseup = null;
+    document.ontouchmove = null;
+    document.ontouchend = null;
+}
+
+// Handle mouse events for left joystick
+leftStick.onmousedown = (event) => startDragging(leftStick, leftJoystick, event);
 
 // Handle touch events for left joystick
-leftStick.ontouchstart = (event) => {
-    event.preventDefault(); // Prevent scrolling on touch devices
-    document.ontouchmove = (e) => updateJoystick(leftStick, e, leftJoystick);
-    document.ontouchend = () => {
-        resetStick(leftStick);
-        heave = 0; // Reset values on release
-        yaw = 0;   // Reset values on release
-        heaveValue.textContent = heave;
-        yawValue.textContent = yaw;
-        document.ontouchmove = null;
-        document.ontouchend = null;
-    };
-};
+leftStick.ontouchstart = (event) => startDragging(leftStick, leftJoystick, event);
 
 // Handle mouse events for right joystick
-rightStick.onmousedown = (event) => {
-    document.onmousemove = (e) => updateJoystick(rightStick, e, rightJoystick);
-    document.onmouseup = () => {
-        resetStick(rightStick);
-        surge = 0; // Reset values on release
-        sway = 0;  // Reset values on release
-        surgeValue.textContent = surge;
-        swayValue.textContent = sway;
-        document.onmousemove = null;
-        document.onmouseup = null;
-    };
-};
+rightStick.onmousedown = (event) => startDragging(rightStick, rightJoystick, event);
 
 // Handle touch events for right joystick
-rightStick.ontouchstart = (event) => {
-    event.preventDefault(); // Prevent scrolling on touch devices
-    document.ontouchmove = (e) => updateJoystick(rightStick, e, rightJoystick);
-    document.ontouchend = () => {
-        resetStick(rightStick);
-        surge = 0; // Reset values on release
-        sway = 0;  // Reset values on release
-        surgeValue.textContent = surge;
-        swayValue.textContent = sway;
-        document.ontouchmove = null;
-        document.ontouchend = null;
-    };
-};
+rightStick.ontouchstart = (event) => startDragging(rightStick, rightJoystick, event);
 
 // Connect WebSocket when the connect button is clicked
 document.getElementById('connectButton').onclick = connectWebSocket;
