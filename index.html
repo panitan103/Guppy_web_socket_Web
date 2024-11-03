@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joystick Control with WebSocket</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <h1>WebSocket Joystick Control</h1>
+
+    <div class="joystick-container">
+        <div>
+            <h4>Left Joystick (Heave/Yaw)</h4>
+            <div>Heave: <span id="heaveValue">0</span></div>
+            <div>Yaw: <span id="yawValue">0</span></div>
+            <div id="leftJoystick" class="joystick">
+                <div id="leftStick" class="stick"></div>
+            </div>
+        </div>
+
+        <div>
+            <h4>Right Joystick (Surge/Sway)</h4>
+            <div>Surge: <span id="surgeValue">0</span></div>
+            <div>Sway: <span id="swayValue">0</span></div>
+            <div id="rightJoystick" class="joystick">
+                <div id="rightStick" class="stick"></div>
+            </div>
+        </div>
+    </div>
+
+    <table>
+        <tr>
+            <td><input type="number" id="s1Input" placeholder="S1"></td>
+            <td><input type="number" id="s2Input" placeholder="S2"></td>
+        </tr>
+        <tr>
+            <td><input type="number" id="o1Input" placeholder="O1"></td>
+            <td><input type="number" id="o2Input" placeholder="O2"></td>
+            <td><input type="number" id="o3Input" placeholder="O3"></td>
+            <td><input type="number" id="o4Input" placeholder="O4"></td>
+        </tr>
+    </table>
+
+    <input type="text" id="wsUrl" placeholder="WebSocket URL" value="ws://10.0.0.112:9090">
+    <button id="connectButton">Connect WebSocket</button>
+
+    <pre id="sendmessages"></pre>
+
+    <script src="assets/js/joystick.js"></script>
+</body>
+</html>

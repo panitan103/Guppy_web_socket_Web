@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+pre {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 150px; /* Set a maximum height */
+    white-space: pre-wrap; /* Preserve white space formatting */
+    word-wrap: break-word; /* Break long words to fit the container */
+}
+
+table {
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+input {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}

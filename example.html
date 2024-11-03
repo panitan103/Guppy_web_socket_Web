@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Communication</title>
+    <link rel="stylesheet" href="assets/css/example-style.css"> <!-- Link to the CSS file -->
+
+</head>
+<body>
+    <h1>WebSocket Example</h1>
+    <table>
+        <tr>
+            <td><input type="number" id="surge" placeholder="Surge"></td>
+            <td><input type="number" id="sway" placeholder="Sway"></td>
+            <td><input type="number" id="yaw" placeholder="Yaw"></td>
+            <td><input type="number" id="heave" placeholder="Heave"></td>
+        </tr>
+        <tr>
+            <td><input type="number" id="s1" placeholder="S1"></td>
+            <td><input type="number" id="s2" placeholder="S2"></td>
+        </tr>
+        <tr>
+            <td><input type="number" id="o1" placeholder="O1"></td>
+            <td><input type="number" id="o2" placeholder="O2"></td>
+            <td><input type="number" id="o3" placeholder="O3"></td>
+            <td><input type="number" id="o4" placeholder="O4"></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td>
+                <button id="sendButton">Send Data</button>
+
+                <pre id="sendmessages"></pre>
+
+            </td>
+            <td>
+                <button id="recievedButton">Recieved Data</button>
+
+                <pre id="recievedmessages"></pre>
+            </td>
+        </tr>
+        
+    </table>
+
+    
+
+
+    <script src="assets/js/guppy.js"></script>
+</body>
+</html>

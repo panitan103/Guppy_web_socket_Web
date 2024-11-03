@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    text-align: center;
+}
+
+pre {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 150px; /* Set a maximum height */
+    white-space: pre-wrap; /* Preserve white space formatting */
+    word-wrap: break-word; /* Break long words to fit the container */
+}
+
+table {
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+input {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.joystick-container {
+    display: flex;
+    justify-content: center; /* Centering horizontally */
+    align-items: center;     /* Centering vertically */
+    margin-bottom: 20px;
+}
+
+.joystick {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    margin: 0 10px; /* Add margin to space out the joysticks */
+}
+
+.stick {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #007bff;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    left: 50%; /* Start in center */
+    top: 50%;  /* Start in center */
+}
+
+.label {
+    margin-top: 10px;
+    font-weight: bold;
+}
