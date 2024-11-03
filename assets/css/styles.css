@@ -12,20 +12,22 @@ pre {
     max-height: 150px; /* Set a maximum height */
     white-space: pre-wrap; /* Preserve white space formatting */
     word-wrap: break-word; /* Break long words to fit the container */
+    flex: 1; /* Allow pre elements to grow */
+    margin: 0 10px; /* Space between the pre elements */
 }
 
 .button-container {
     display: flex;
-    flex-wrap: wrap; /* Allow buttons to wrap onto the next line */
-    justify-content: center; /* Center the buttons */
+    justify-content: space-between;
     margin-bottom: 20px;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
 }
 
 .left-group, .right-group {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 10px; /* Add margin for spacing */
 }
 
 .control {
@@ -36,16 +38,21 @@ pre {
 }
 
 .control-button {
-    width: 120px; /* Adjusted width for smaller screens */
-    height: 60px; /* Adjusted height for smaller screens */
+    width: 200px; /* Fixed width for buttons */
+    height: 75px; /* Fixed height for buttons */
     margin: 5px; /* Margin between buttons */
 }
 
 .connection-container {
     display: flex;
-    justify-content: center;
     align-items: center; /* Align items vertically centered */
     margin-top: 10px; /* Space above the connection controls */
+    flex: 1; /* Allow connection container to grow */
+}
+
+#wsUrl {
+    width: 100%; /* Full width for input */
+    margin-right: 10px; /* Space between input and button */
 }
 
 #ledIndicator {
@@ -63,31 +70,45 @@ pre {
 .led-off {
     background-color: red; /* Color when disconnected */
 }
-#resetButton{
-    width: 120px; /* Adjusted width for smaller screens */
-    height: 60px; /* Adjusted height for smaller screens */
-    margin: 5px; /* Margin between buttons */
 
+.info-container {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-around; /* Space elements evenly */
+    align-items: flex-start; /* Align items to the start */
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    margin-top: 20px; /* Space above the info container */
 }
-/* Media queries for responsive design */
+
+.inputs-container {
+    display: flex; /* Use flexbox for alignment */
+    flex-direction: column; /* Align inputs vertically */
+    flex: 1; /* Allow inputs container to grow */
+    margin: 0 10px; /* Space around the inputs container */
+}
+
+.inputs-container div {
+    display: flex; /* Flex for label and input */
+    justify-content: space-between; /* Space between label and input */
+    margin: 5px 0; /* Space between input rows */
+}
+
+/* Responsive styles for smaller screens */
 @media (max-width: 768px) {
-    .control-button {
-        width: 80px; /* Smaller buttons for mobile */
-        height: 50px; /* Smaller height for mobile */
-    }
-
     .button-container {
-        flex-direction: column; /* Stack buttons vertically on small screens */
+        flex-direction: column; /* Stack buttons vertically */
+        align-items: center; /* Center buttons */
     }
 
-    .left-group, .right-group {
-        flex-direction: row; /* Place left and right groups side by side */
-    }
-}
-
-@media (max-width: 480px) {
     .control-button {
-        width: 60px; /* Even smaller buttons for very small screens */
-        height: 40px; /* Smaller height for very small screens */
+        width: 90%; /* Full width for buttons on small screens */
+    }
+
+    .info-container {
+        flex-direction: column; /* Stack info container vertically */
+        align-items: center; /* Center all elements */
+    }
+
+    pre, .inputs-container, .connection-container {
+        width: 90%; /* Full width for info elements */
     }
 }
