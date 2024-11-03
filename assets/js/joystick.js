@@ -53,7 +53,7 @@ function connectWebSocket() {
             Volt=${msg.volt || 'N/A'}
         `;
         
-        document.getElementById('receivedmessages').textContent += `Received: ${formattedReceivedData.trim()}\n`;
+        document.getElementById('receivedmessages').textContent = `Received: ${formattedReceivedData.trim()}\n`;
     };
 
     // Handle connection errors
