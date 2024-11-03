@@ -14,60 +14,36 @@ pre {
     word-wrap: break-word; /* Break long words to fit the container */
 }
 
-table {
-    margin-bottom: 20px;
-    border-collapse: collapse;
-}
-
-td {
-    padding: 10px;
-    border: 1px solid #ccc;
-}
-
-input {
-    width: 100%;
-    padding: 5px;
-    box-sizing: border-box;
-}
-
-.joystick-container {
+.button-container {
     display: flex;
-    justify-content: center; /* Center the joystick container */
-    align-items: center;     /* Align items in the center */
+    justify-content: space-between;
     margin-bottom: 20px;
-    flex-wrap: wrap;         /* Allow wrapping for smaller screens */
+    align-items: center;
 }
 
-.joystick {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    border: 2px solid #ccc;
-    border-radius: 50%;
-    background-color: #f0f0f0;
-    margin: 10px; /* Add margin for spacing */
-    touch-action: none; /* Disable default touch actions */
+.left-group, .right-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.stick {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #007bff;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    left: 50%; /* Start in center */
-    top: 50%;  /* Start in center */
+.control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px 0; /* Space between button groups */
 }
 
-.label {
-    margin-top: 10px;
-    font-weight: bold;
+.control-button {
+    width: 200px; /* Fixed width for buttons */
+    height: 75px; /* Fixed height for buttons */
+    margin: 5px; /* Margin between buttons */
 }
+
 .connection-container {
     display: flex;
-    align-items: center; /* Align items vertically centered */
+    justify-content: center;
+    /* align-items: center; Align items vertically centered */
     margin-top: 10px; /* Space above the connection controls */
 }
 
@@ -85,16 +61,4 @@ input {
 
 .led-off {
     background-color: red; /* Color when disconnected */
-}
-
-@media (max-width: 768px) {
-    .joystick {
-        width: 150px; /* Smaller joystick size on mobile */
-        height: 150px;
-    }
-    
-    .stick {
-        width: 40px; /* Smaller stick size on mobile */
-        height: 40px;
-    }
 }
