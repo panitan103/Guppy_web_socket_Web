@@ -42,8 +42,11 @@
         </tr>
     </table>
 
-    <input type="text" id="wsUrl" placeholder="WebSocket URL" value="ws://10.0.0.112:9090">
-    <button id="connectButton">Connect WebSocket</button>
+    <div class="connection-container">
+        <input type="text" id="wsUrl" placeholder="WebSocket URL" value="ws://10.0.0.112:9090">
+        <button id="connectButton">Connect WebSocket</button>
+        <div id="ledIndicator" class="led-off"></div>
+    </div>
 
     <pre id="sendmessages"></pre>
     <pre id="receivedmessages"></pre>
