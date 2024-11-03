@@ -53,7 +53,7 @@ function connectWebSocket() {
             Volt=${msg.volt || 'N/A'}
         `;
         
-        document.getElementById('receivedmessages').textContent = `Received: ${formattedReceivedData.trim()}\n`;
+        document.getElementById('receivedmessages').textContent += `Received: ${formattedReceivedData.trim()}\n`;
     };
 
     // Handle connection errors
@@ -136,29 +136,36 @@ function resetStick(stick) {
 function startDragging(stick, joystick, event) {
     event.preventDefault(); // Prevent default touch behavior
     isDragging = true;
-    
-    document.onpointermove = (e) => updateJoystick(stick, e, joystick);
-    document.onpointerup = () => {
+
+    // Use the pointer event's coordinates
+    updateJoystick(stick, event, joystick);
+
+    // Update position while dragging
+    const moveHandler = (e) => updateJoystick(stick, e, joystick);
+    const upHandler = () => {
         resetStick(stick);
         heave = 0; // Reset values on release
         yaw = 0;   // Reset values on release
         heaveValue.textContent = heave;
         yawValue.textContent = yaw;
-        cleanup();
+        cleanup(moveHandler, upHandler);
     };
+
+    document.addEventListener('pointermove', moveHandler);
+    document.addEventListener('pointerup', upHandler);
 }
 
 // Function to clean up event handlers
-function cleanup() {
-    document.onpointermove = null;
-    document.onpointerup = null;
+function cleanup(moveHandler, upHandler) {
+    document.removeEventListener('pointermove', moveHandler);
+    document.removeEventListener('pointerup', upHandler);
 }
 
 // Handle pointer events for left joystick
-leftStick.onpointerdown = (event) => startDragging(leftStick, leftJoystick, event);
+leftStick.addEventListener('pointerdown', (event) => startDragging(leftStick, leftJoystick, event));
 
 // Handle pointer events for right joystick
-rightStick.onpointerdown = (event) => startDragging(rightStick, rightJoystick, event);
+rightStick.addEventListener('pointerdown', (event) => startDragging(rightStick, rightJoystick, event));
 
 // Connect WebSocket when the connect button is clicked
 document.getElementById('connectButton').onclick = connectWebSocket;
