@@ -94,49 +94,49 @@ function sendData() {
 
 // Button click handlers
 document.getElementById('heaveUp').onclick = () => {
-    heave += 1; // Increment heave
+    heave += 5; // Increment heave by 5
     heaveValue.textContent = heave;
     sendData(); // Send data on button click
 };
 
 document.getElementById('heaveDown').onclick = () => {
-    heave -= 1; // Decrement heave
+    heave -= 5; // Decrement heave by 5
     heaveValue.textContent = heave;
     sendData(); // Send data on button click
 };
 
 document.getElementById('yawLeft').onclick = () => {
-    yaw -= 1; // Decrement yaw
+    yaw -= 5; // Decrement yaw by 5
     yawValue.textContent = yaw;
     sendData(); // Send data on button click
 };
 
 document.getElementById('yawRight').onclick = () => {
-    yaw += 1; // Increment yaw
+    yaw += 5; // Increment yaw by 5
     yawValue.textContent = yaw;
     sendData(); // Send data on button click
 };
 
 document.getElementById('surgeUp').onclick = () => {
-    surge += 1; // Increment surge
+    surge += 5; // Increment surge by 5
     surgeValue.textContent = surge;
     sendData(); // Send data on button click
 };
 
 document.getElementById('surgeDown').onclick = () => {
-    surge -= 1; // Decrement surge
+    surge -= 5; // Decrement surge by 5
     surgeValue.textContent = surge;
     sendData(); // Send data on button click
 };
 
 document.getElementById('swayLeft').onclick = () => {
-    sway -= 1; // Decrement sway
+    sway -= 5; // Decrement sway by 5
     swayValue.textContent = sway;
     sendData(); // Send data on button click
 };
 
 document.getElementById('swayRight').onclick = () => {
-    sway += 1; // Increment sway
+    sway += 5; // Increment sway by 5
     swayValue.textContent = sway;
     sendData(); // Send data on button click
 };

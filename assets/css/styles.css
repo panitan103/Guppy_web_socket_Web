@@ -1,4 +1,4 @@
-body {
+body { 
     font-family: Arial, sans-serif;
     margin: 20px;
     text-align: center;
@@ -16,15 +16,16 @@ pre {
 
 .button-container {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap; /* Allow buttons to wrap onto the next line */
+    justify-content: center; /* Center the buttons */
     margin-bottom: 20px;
-    align-items: center;
 }
 
 .left-group, .right-group {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 10px; /* Add margin for spacing */
 }
 
 .control {
@@ -35,15 +36,15 @@ pre {
 }
 
 .control-button {
-    width: 200px; /* Fixed width for buttons */
-    height: 75px; /* Fixed height for buttons */
+    width: 120px; /* Adjusted width for smaller screens */
+    height: 60px; /* Adjusted height for smaller screens */
     margin: 5px; /* Margin between buttons */
 }
 
 .connection-container {
     display: flex;
     justify-content: center;
-    /* align-items: center; Align items vertically centered */
+    align-items: center; /* Align items vertically centered */
     margin-top: 10px; /* Space above the connection controls */
 }
 
@@ -61,4 +62,32 @@ pre {
 
 .led-off {
     background-color: red; /* Color when disconnected */
+}
+#resetButton{
+    width: 120px; /* Adjusted width for smaller screens */
+    height: 60px; /* Adjusted height for smaller screens */
+    margin: 5px; /* Margin between buttons */
+
+}
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+    .control-button {
+        width: 80px; /* Smaller buttons for mobile */
+        height: 50px; /* Smaller height for mobile */
+    }
+
+    .button-container {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+    }
+
+    .left-group, .right-group {
+        flex-direction: row; /* Place left and right groups side by side */
+    }
+}
+
+@media (max-width: 480px) {
+    .control-button {
+        width: 60px; /* Even smaller buttons for very small screens */
+        height: 40px; /* Smaller height for very small screens */
+    }
 }
