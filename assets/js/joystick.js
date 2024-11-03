@@ -13,6 +13,7 @@ let heave = 0;
 let yaw = 0;
 let surge = 0;
 let sway = 0;
+let isDragging = false;
 
 // Function to connect to the WebSocket server
 function connectWebSocket() {
@@ -101,8 +102,8 @@ function sendRealTimeData() {
 // Function to update the joystick position and values
 function updateJoystick(stick, event, joystick) {
     const rect = joystick.getBoundingClientRect();
-    const offsetX = event.clientX !== undefined ? event.clientX - rect.left - rect.width / 2 : event.touches[0].clientX - rect.left - rect.width / 2; // Centering the joystick
-    const offsetY = event.clientY !== undefined ? event.clientY - rect.top - rect.height / 2 : event.touches[0].clientY - rect.top - rect.height / 2;  // Centering the joystick
+    const offsetX = event.clientX - rect.left - rect.width / 2; // Centering the joystick
+    const offsetY = event.clientY - rect.top - rect.height / 2;  // Centering the joystick
 
     const maxDistance = rect.width / 2 - stick.offsetWidth / 2;
 
@@ -125,27 +126,19 @@ function updateJoystick(stick, event, joystick) {
     }
 }
 
-// Reset the stick position on mouse/touch end
+// Reset the stick position
 function resetStick(stick) {
     stick.style.left = '50%'; // Reset to center
     stick.style.top = '50%';  // Reset to center
 }
 
-// Function to handle start of dragging
+// Function to handle pointer down
 function startDragging(stick, joystick, event) {
     event.preventDefault(); // Prevent default touch behavior
-    document.onmousemove = (e) => updateJoystick(stick, e, joystick);
-    document.onmouseup = () => {
-        resetStick(stick);
-        heave = 0; // Reset values on release
-        yaw = 0;   // Reset values on release
-        heaveValue.textContent = heave;
-        yawValue.textContent = yaw;
-        cleanup();
-    };
-
-    document.ontouchmove = (e) => updateJoystick(stick, e, joystick);
-    document.ontouchend = () => {
+    isDragging = true;
+    
+    document.onpointermove = (e) => updateJoystick(stick, e, joystick);
+    document.onpointerup = () => {
         resetStick(stick);
         heave = 0; // Reset values on release
         yaw = 0;   // Reset values on release
@@ -157,23 +150,15 @@ function startDragging(stick, joystick, event) {
 
 // Function to clean up event handlers
 function cleanup() {
-    document.onmousemove = null;
-    document.onmouseup = null;
-    document.ontouchmove = null;
-    document.ontouchend = null;
+    document.onpointermove = null;
+    document.onpointerup = null;
 }
 
-// Handle mouse events for left joystick
-leftStick.onmousedown = (event) => startDragging(leftStick, leftJoystick, event);
+// Handle pointer events for left joystick
+leftStick.onpointerdown = (event) => startDragging(leftStick, leftJoystick, event);
 
-// Handle touch events for left joystick
-leftStick.ontouchstart = (event) => startDragging(leftStick, leftJoystick, event);
-
-// Handle mouse events for right joystick
-rightStick.onmousedown = (event) => startDragging(rightStick, rightJoystick, event);
-
-// Handle touch events for right joystick
-rightStick.ontouchstart = (event) => startDragging(rightStick, rightJoystick, event);
+// Handle pointer events for right joystick
+rightStick.onpointerdown = (event) => startDragging(rightStick, rightJoystick, event);
 
 // Connect WebSocket when the connect button is clicked
 document.getElementById('connectButton').onclick = connectWebSocket;
