@@ -13,18 +13,16 @@ let heave = 0;
 let yaw = 0;
 let surge = 0;
 let sway = 0;
-let isDragging = false;
 
 // Function to connect to the WebSocket server
 function connectWebSocket() {
     const url = document.getElementById('wsUrl').value;
     ws = new WebSocket(url);
 
-    // Handle connection opening
     ws.onopen = () => {
         console.log('Connected to the WebSocket server.');
         document.getElementById('sendmessages').textContent = 'Connected to the WebSocket server.\n';
-
+        
         // Send subscription data
         const data = {
             op: "subscribe",
@@ -36,7 +34,6 @@ function connectWebSocket() {
         sendRealTimeData();
     };
 
-    // Handle incoming messages
     ws.onmessage = (event) => {
         const receivedData = JSON.parse(event.data);
         console.log('Received:', receivedData);
@@ -56,13 +53,11 @@ function connectWebSocket() {
         document.getElementById('receivedmessages').textContent += `Received: ${formattedReceivedData.trim()}\n`;
     };
 
-    // Handle connection errors
     ws.onerror = (error) => {
         console.error('WebSocket Error:', error);
         document.getElementById('sendmessages').textContent += `Error: ${error.message}\n`;
     };
 
-    // Handle connection closure
     ws.onclose = () => {
         console.log('WebSocket connection closed.');
         document.getElementById('sendmessages').textContent += 'WebSocket connection closed.\n';
@@ -107,6 +102,7 @@ function updateJoystick(stick, event, joystick) {
 
     const maxDistance = rect.width / 2 - stick.offsetWidth / 2;
 
+    // Limit movement within the joystick area
     const x = Math.max(-maxDistance, Math.min(maxDistance, offsetX));
     const y = Math.max(-maxDistance, Math.min(maxDistance, offsetY));
 
@@ -114,11 +110,13 @@ function updateJoystick(stick, event, joystick) {
     stick.style.top = `${y + maxDistance}px`;    // Centering the stick
 
     if (joystick === leftJoystick) {
+        // Calculate heave and yaw values based on joystick position
         heave = Math.round((-y / maxDistance) * 200); // Range -200 to 200
         yaw = Math.round((x / maxDistance) * 100); // Range -100 to 100
         heaveValue.textContent = heave;
         yawValue.textContent = yaw;
     } else if (joystick === rightJoystick) {
+        // Calculate surge and sway values based on joystick position
         sway = Math.round((x / maxDistance) * 200); // Range -200 to 200
         surge = Math.round((-y / maxDistance) * 200); // Range -200 to 200
         surgeValue.textContent = surge;
@@ -126,46 +124,39 @@ function updateJoystick(stick, event, joystick) {
     }
 }
 
-// Reset the stick position
+// Reset the stick position on pointer up
 function resetStick(stick) {
     stick.style.left = '50%'; // Reset to center
     stick.style.top = '50%';  // Reset to center
 }
 
-// Function to handle pointer down
-function startDragging(stick, joystick, event) {
-    event.preventDefault(); // Prevent default touch behavior
-    isDragging = true;
-
-    // Use the pointer event's coordinates
-    updateJoystick(stick, event, joystick);
-
-    // Update position while dragging
-    const moveHandler = (e) => updateJoystick(stick, e, joystick);
-    const upHandler = () => {
-        resetStick(stick);
+// Handle pointer events for left joystick
+leftStick.addEventListener('pointerdown', (event) => {
+    document.addEventListener('pointermove', (e) => updateJoystick(leftStick, e, leftJoystick));
+    document.addEventListener('pointerup', () => {
+        resetStick(leftStick);
         heave = 0; // Reset values on release
         yaw = 0;   // Reset values on release
         heaveValue.textContent = heave;
         yawValue.textContent = yaw;
-        cleanup(moveHandler, upHandler);
-    };
-
-    document.addEventListener('pointermove', moveHandler);
-    document.addEventListener('pointerup', upHandler);
-}
-
-// Function to clean up event handlers
-function cleanup(moveHandler, upHandler) {
-    document.removeEventListener('pointermove', moveHandler);
-    document.removeEventListener('pointerup', upHandler);
-}
-
-// Handle pointer events for left joystick
-leftStick.addEventListener('pointerdown', (event) => startDragging(leftStick, leftJoystick, event));
+        document.removeEventListener('pointermove', updateJoystick);
+        document.removeEventListener('pointerup', resetStick);
+    });
+});
 
 // Handle pointer events for right joystick
-rightStick.addEventListener('pointerdown', (event) => startDragging(rightStick, rightJoystick, event));
+rightStick.addEventListener('pointerdown', (event) => {
+    document.addEventListener('pointermove', (e) => updateJoystick(rightStick, e, rightJoystick));
+    document.addEventListener('pointerup', () => {
+        resetStick(rightStick);
+        surge = 0; // Reset values on release
+        sway = 0;  // Reset values on release
+        surgeValue.textContent = surge;
+        swayValue.textContent = sway;
+        document.removeEventListener('pointermove', updateJoystick);
+        document.removeEventListener('pointerup', resetStick);
+    });
+});
 
 // Connect WebSocket when the connect button is clicked
 document.getElementById('connectButton').onclick = connectWebSocket;

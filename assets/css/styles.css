@@ -32,9 +32,10 @@ input {
 
 .joystick-container {
     display: flex;
-    justify-content: center; /* Centering horizontally */
-    align-items: center;     /* Centering vertically */
+    justify-content: center; /* Center the joystick container */
+    align-items: center;     /* Align items in the center */
     margin-bottom: 20px;
+    flex-wrap: wrap;         /* Allow wrapping for smaller screens */
 }
 
 .joystick {
@@ -44,7 +45,8 @@ input {
     border: 2px solid #ccc;
     border-radius: 50%;
     background-color: #f0f0f0;
-    margin: 0 10px; /* Add margin to space out the joysticks */
+    margin: 10px; /* Add margin for spacing */
+    touch-action: none; /* Disable default touch actions */
 }
 
 .stick {
@@ -62,4 +64,16 @@ input {
 .label {
     margin-top: 10px;
     font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .joystick {
+        width: 150px; /* Smaller joystick size on mobile */
+        height: 150px;
+    }
+    
+    .stick {
+        width: 40px; /* Smaller stick size on mobile */
+        height: 40px;
+    }
 }
