@@ -80,7 +80,7 @@
 }
 .compass-arrow{
     transform-origin: 50% 50%;
-    transform: rotate(var(--rotation-angle, 0deg));
+    transform: rotate(var(--rotation-angle, -45deg));
 }
 .gauge-container{
     width: 150px;
