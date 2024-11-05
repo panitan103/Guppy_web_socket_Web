@@ -34,16 +34,14 @@
     align-items: center;
     justify-items: center;
     /* for debug */
-    border: 10px solid ;
+    border: 3px solid ;
 
  
 }
-.joystick-output-column input{
+.joystick-output-column input,.joystick-input-column input{
     width: 50px;
 }
-.joystick-input-column input{
-    width: 50px;
-}
+
 .joystick-output-column, .joystick-input-column{
     display: flex;
     flex-direction: row;
@@ -73,4 +71,22 @@
 
 .led-off {
     background-color: red; /* Color when disconnected */
+}
+
+
+/* Responsive styles for larger screens */
+@media (min-width: 1024px) {
+    .joystick-output-column input,.joystick-input-column input{
+        width: 100px;
+    }
+    #joy1Div{
+        width: 300px;
+        height: 300px;
+        margin-left: 150px; 
+    }
+    #joy2Div{
+        width: 300px;
+        height: 300px;
+        margin-right: 150px; 
+    }
 }
