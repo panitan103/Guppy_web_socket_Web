@@ -166,12 +166,12 @@ function sendData() {
                 yaw: yaw_value,
                 surge: surge_value,
                 sway: sway_value,
-                s1: s1,
-                s2: s2,
-                o1: o1,
-                o2: o2,
-                o3: o3,
-                o4: o4
+                s1: 0,
+                s2: 0,
+                o1: 0,
+                o2: 0,
+                o3: 0,
+                o4: 0
             }
         };
         ws.send(JSON.stringify(data));
