@@ -15,15 +15,23 @@ value = Math.max(min, Math.min(max, value));
 let degrees = ((value + max) / (max*2)) * 180 - 90;
 document.documentElement.style.setProperty(element, degrees + 'deg');
 }
-var Joy1 = new JoyStick('joy1Div', {}, function(stickData) {
+
+var joy_parameter={
+    internalLineWidth : 5,
+    internalFillColor: '#FF7058',
+    internalStrokeColor : '#324A5E',
+    externalStrokeColor : '#324A5E',
+    externalLineWidth :     7,
+    };
+var Joy1 = new JoyStick('joy1Div', joy_parameter, function(stickData) {
     // console.log(stickData.xPosition);
     // console.log(stickData.yPosition);
     // console.log(stickData.cardinalDirection);
     // console.log(stickData.x);
     // console.log(stickData.y);
-
     yaw_value=stickData.x*2;
     heave_value=stickData.y*2;
+    
 
     if(yaw_value > 200){
         // document.getElementById("yaw-value-out").value=200;
@@ -48,13 +56,10 @@ var Joy1 = new JoyStick('joy1Div', {}, function(stickData) {
     }
     setGaugeValue(yaw_value,"--pointer-rotation-yaw"),min=-100,max=100;
     setGaugeValue(heave_value,"--pointer-rotation-heave");
-
-
-
     sendData();
 });
 
-var Joy2 = new JoyStick('joy2Div', {}, function(stickData) {
+var Joy2 = new JoyStick('joy2Div',joy_parameter, function(stickData) {
     // console.log(stickData.xPosition);
     // console.log(stickData.yPosition);
     // console.log(stickData.cardinalDirection);
@@ -89,7 +94,6 @@ var Joy2 = new JoyStick('joy2Div', {}, function(stickData) {
     setGaugeValue(surge_value,"--pointer-rotation-surge");
     setGaugeValue(sway_value,"--pointer-rotation-sway");
     sendData();
-
 });
 
 

@@ -1,3 +1,13 @@
+body{
+    background-color: rgb(49, 49, 80);
+}
+h1{
+    color: white;
+}
+text{
+    fill: white;
+}
+
 #joy1Div {
 
     margin-left: 0; 
@@ -82,6 +92,10 @@
     transform-origin: 50% 50%;
     transform: rotate(var(--rotation-angle, -45deg));
 }
+.compass text{
+    fill:#324A5E;
+}
+
 .gauge-container{
     width: 150px;
     height: 150px;
