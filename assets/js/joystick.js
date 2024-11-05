@@ -51,8 +51,10 @@ var Joy2 = new JoyStick('joy2Div', {}, function(stickData) {
 
     if(sway_value > 200){
         document.getElementById("sway-value").value=200;
+        sway_value=200;
     }else if(sway_value < -200){
         document.getElementById("sway-value").value=-200;
+        sway_value=-200;
 
     }else{
         document.getElementById("sway-value").value = sway_value;
@@ -60,9 +62,11 @@ var Joy2 = new JoyStick('joy2Div', {}, function(stickData) {
 
     if(surge_value > 200){
         document.getElementById("surge-value").value=200;
+        surge_value=200;
 
     }else if(surge_value < -200){
         document.getElementById("surge-value").value=-200;
+        surge_value=-200;
 
     }else{
         document.getElementById("surge-value").value = surge_value;
