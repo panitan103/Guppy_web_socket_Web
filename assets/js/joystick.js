@@ -19,8 +19,8 @@ document.documentElement.style.setProperty(element, degrees + 'deg');
 var joy_parameter={
     internalLineWidth : 5,
     internalFillColor: '#FF7058',
-    internalStrokeColor : '#324A5E',
-    externalStrokeColor : '#324A5E',
+    internalStrokeColor : '#AAAAAA',
+    externalStrokeColor : '#AAAAAA',
     externalLineWidth :     7,
     };
 var Joy1 = new JoyStick('joy1Div', joy_parameter, function(stickData) {

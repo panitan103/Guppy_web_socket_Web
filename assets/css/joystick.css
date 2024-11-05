@@ -1,12 +1,10 @@
 body{
-    background-color: rgb(49, 49, 80);
+    background-color: rgb(56, 56, 56);
 }
 h1{
-    color: white;
+    color: #838383;
 }
-text{
-    fill: white;
-}
+
 
 #joy1Div {
 
@@ -91,9 +89,6 @@ text{
 .compass-arrow{
     transform-origin: 50% 50%;
     transform: rotate(var(--rotation-angle, -45deg));
-}
-.compass text{
-    fill:#324A5E;
 }
 
 .gauge-container{
