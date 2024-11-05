@@ -9,111 +9,249 @@
 <body>
     <h1>Guppy WebSocket</h1>
     <div class="connection-container">
-        <input type="text" id="wsUrl" placeholder="WebSocket URL" value="ws://10.0.0.112:9090">
+        <input type="text" id="wsUrl" placeholder="WebSocket URL" value="ws://192.168.194.100:9090">
         <button id="connectButton">Connect</button>
         <div id="ledIndicator" class="led-off"></div>
     </div>
-    <div class="joystick">
-        <div id="joy1Div" ></div>
+        <div class="joystick-container">
+            <div id="joy1Div" class="joystick-control" >        </div>
+            <!-- <div>
+                <div class="joystick-output">
+                    <h2>Gupppy Output</h2>
+                    <div class="joystick-output-column">
+                        <div >
+                            <div>
+                                <label >Surge:</label>
+                                <input id="surge-value" type="text"></label>
+                            </div>
+                            <div>
+                                <label >Sway:</label>
+                                <input id="sway-value" type="text"></label>
+                            </div>
+                            <div>
+                                <label >Yaw:</label>
+                                <input id="yaw-value-out" type="text"></label>
+                            </div>
+                            <div>
+                                <label >Heave:</label>
+                                <input id="heave-value" type="text"></label>
+                            </div>
+                        </div>
+                        <div >
+                            <div>
+                                <label >S1:</label>
+                                <input id="s1Input" type="text"></label>
+                            </div>
+                            <div>
+                                <label >S2:</label>
+                                <input id="s2Input" type="text"></label>
+                            </div>
+                        </div>
+                        <div >
+                            <div>
+                                <label >O1:</label>
+                                <input id="o1Input" type="text"></label>
+                            </div>
+                            <div>
+                                <label >O2:</label>
+                                <input id="o2Input" type="text"></label>
+                            </div>
+                            <div>
+                                <label >O3:</label>
+                                <input id="o3Input" type="text"></label>
+                            </div>
+                            <div>
+                                <label >O4:</label>
+                                <input id="o4Input" type="text"></label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="joystick-input">
+                    <h2>Gupppy Input</h2>
+
+                    <div class="joystick-input-column">
+                        <div class="joystick-input-column-column">
+                            <div>
+                                <label >Roll:</label>
+                                <input id="roll-value" type="text"></label>
+                            </div>
+                            <div>
+                                <label >Pitch:</label>
+                                <input id="pitch-value" type="text"></label>
+                            </div>
+                            <div>
+                                <label >Yaw:</label>
+                                <input id="yaw-value-in" type="text"></label>
+                            </div>
+                            <div>
+                                <label >Depth:</label>
+                                <input id="depth-value" type="text"></label>
+                            </div>
+                        </div>
+                        <div class="joystick-input-column-column">
+                            <div>
+                                <label >Water:</label>
+                                <input id="water-value" type="text"></label>
+                            </div>
+                            <div>
+                                <label >Volt:</label>
+                                <input id="volt-value" type="text"></label>
+                            </div>
+                            <div>
+                                <label >Amp:</label>
+                                <input id="amp-value" type="text"></label>
+                            </div>
+                        </div>
+                    </div>
+                        
+                        
+                </div>
+            </div> -->
+
+            <div style="display: flex;">
+                <div >
+                    <div class="gauge-container-heave  gauge-container">
+                        <!-- Gauge SVG -->
+                        <svg  viewBox="0 0 200 200">
+                          <!-- Outer circle -->
+                          <circle cx="100" cy="100" r="90" stroke="#324A5E" stroke-width="10" fill="none"/>
+                          
+                          <!-- Background arc for gauge (180 degrees) -->
+                          <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#ddd" stroke-width="15"/>
+                    
+                          <!-- Active arc for gauge (progress indicator) -->
+                          <path id="progress" d="M 20 100 A 80 80 0 0 1 100 20" fill="none" stroke="#FF7058" stroke-width="15" />
+                    
+                          <!-- Pointer -->
+                          <line x1="100" y1="100" x2="100" y2="35" stroke="#FF7058" stroke-width="5" class="gauge-pointer-heave"/>
+                    
+                          <!-- Center circle -->
+                          <circle cx="100" cy="100" r="10" fill="#FFD05B"/>
+                    
+                          <!-- Labels -->
+                          <text x="45%" y="60%" font-size="12" fill="#324A5E">Heave</text>
     
-        <div class="joystick-output">
-            <h2>Gupppy Output</h2>
-            <div class="joystick-output-column">
-                <div >
-                    <div>
-                        <label >Surge:</label>
-                        <input id="surge-value" type="text"></label>
+                          <text x="30" y="110" font-size="12" fill="#324A5E">-200</text>
+                          <text x="90" y="30" font-size="12" fill="#324A5E">0</text>
+                          <text x="170" y="110" font-size="12" fill="#324A5E">200</text>
+                        </svg>
+                        
                     </div>
-                    <div>
-                        <label >Sway:</label>
-                        <input id="sway-value" type="text"></label>
-                    </div>
-                    <div>
-                        <label >Yaw:</label>
-                        <input id="yaw-value-out" type="text"></label>
-                    </div>
-                    <div>
-                        <label >Heave:</label>
-                        <input id="heave-value" type="text"></label>
-                    </div>
-                </div>
-                <div >
-                    <div>
-                        <label >S1:</label>
-                        <input id="s1Input" type="text"></label>
-                    </div>
-                    <div>
-                        <label >S2:</label>
-                        <input id="s2Input" type="text"></label>
-                    </div>
-                </div>
-                <div >
-                    <div>
-                        <label >O1:</label>
-                        <input id="o1Input" type="text"></label>
-                    </div>
-                    <div>
-                        <label >O2:</label>
-                        <input id="o2Input" type="text"></label>
-                    </div>
-                    <div>
-                        <label >O3:</label>
-                        <input id="o3Input" type="text"></label>
-                    </div>
-                    <div>
-                        <label >O4:</label>
-                        <input id="o4Input" type="text"></label>
+                    <div class="gauge-container-yaw gauge-container" >
+                        <!-- Gauge SVG -->
+                        <svg viewBox="0 0 200 200">
+                          <!-- Outer circle -->
+                          <circle cx="100" cy="100" r="90" stroke="#324A5E" stroke-width="10" fill="none"/>
+                          
+                          <!-- Background arc for gauge (180 degrees) -->
+                          <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#ddd" stroke-width="15"/>
+                    
+                          <!-- Active arc for gauge (progress indicator) -->
+                          <path id="progress" d="M 20 100 A 80 80 0 0 1 100 20" fill="none" stroke="#FF7058" stroke-width="15" />
+                    
+                          <!-- Pointer -->
+                          <line x1="100" y1="100" x2="100" y2="35" stroke="#FF7058" stroke-width="5" class="gauge-pointer-yaw"/>
+                    
+                          <!-- Center circle -->
+                          <circle cx="100" cy="100" r="10" fill="#FFD05B"/>
+                    
+                          <!-- Labels -->
+                          <text x="45%" y="60%" font-size="12" fill="#324A5E" >Yaw</text>
+    
+                          <text x="30" y="110" font-size="12" fill="#324A5E">-100</text>
+                          <text x="90" y="30" font-size="12" fill="#324A5E">0</text>
+                          <text x="170" y="110" font-size="12" fill="#324A5E">100</text>
+                        </svg>
+                        
                     </div>
                 </div>
+                <div>
+                    <div class="gauge-container-surge  gauge-container">
+                        <!-- Gauge SVG -->
+                        <svg  viewBox="0 0 200 200">
+                          <!-- Outer circle -->
+                          <circle cx="100" cy="100" r="90" stroke="#324A5E" stroke-width="10" fill="none"/>
+                          
+                          <!-- Background arc for gauge (180 degrees) -->
+                          <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#ddd" stroke-width="15"/>
+                    
+                          <!-- Active arc for gauge (progress indicator) -->
+                          <path id="progress" d="M 20 100 A 80 80 0 0 1 100 20" fill="none" stroke="#FF7058" stroke-width="15" />
+                    
+                          <!-- Pointer -->
+                          <line x1="100" y1="100" x2="100" y2="35" stroke="#FF7058" stroke-width="5" class="gauge-pointer-surge"/>
+                    
+                          <!-- Center circle -->
+                          <circle cx="100" cy="100" r="10" fill="#FFD05B"/>
+                    
+                          <!-- Labels -->
+                          <text x="45%" y="60%" font-size="12" fill="#324A5E">Surge</text>
+    
+                          <text x="30" y="110" font-size="12" fill="#324A5E">-200</text>
+                          <text x="90" y="30" font-size="12" fill="#324A5E">0</text>
+                          <text x="170" y="110" font-size="12" fill="#324A5E">200</text>
+                        </svg>
+                        
+                    </div>
+                    <div class="gauge-container-sway  gauge-container">
+                        <!-- Gauge SVG -->
+                        <svg  viewBox="0 0 200 200">
+                          <!-- Outer circle -->
+                          <circle cx="100" cy="100" r="90" stroke="#324A5E" stroke-width="10" fill="none"/>
+                          
+                          <!-- Background arc for gauge (180 degrees) -->
+                          <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#ddd" stroke-width="15"/>
+                    
+                          <!-- Active arc for gauge (progress indicator) -->
+                          <path id="progress" d="M 20 100 A 80 80 0 0 1 100 20" fill="none" stroke="#FF7058" stroke-width="15" />
+                    
+                          <!-- Pointer -->
+                          <line x1="100" y1="100" x2="100" y2="35" stroke="#FF7058" stroke-width="5" class="gauge-pointer-sway"/>
+                    
+                          <!-- Center circle -->
+                          <circle cx="100" cy="100" r="10" fill="#FFD05B"/>
+                    
+                          <!-- Labels -->
+                          <text x="45%" y="60%" font-size="12" fill="#324A5E">Sway</text>
+    
+                          <text x="30" y="110" font-size="12" fill="#324A5E">-200</text>
+                          <text x="90" y="30" font-size="12" fill="#324A5E">0</text>
+                          <text x="170" y="110" font-size="12" fill="#324A5E">200</text>
+                        </svg>
+                        
+                    </div>
+                </div>
+
             </div>
+
+            <div>
+                <svg class="compass" viewBox="0 0 508 508" >
+                    <circle style="fill:#324A5E;" cx="254" cy="254" r="254"/>
+                    <circle style="fill:#84DBFF;" cx="254" cy="254" r="193.2"/>
+                    <circle style="fill:#FFFFFF;" cx="254" cy="254" r="166.4"/>
+                    <g class="compass-arrow">
+                        <polygon style="fill:#FF7058;" points="341.2,166.8 227.2,227.2 280.8,280.8 "/>
+                        <polygon style="fill:#324A5E;" points="166.8,341.2 280.8,280.8 227.2,227.2 "/>
+                        <circle style="fill:#FFD05B;" cx="254" cy="254" r="21.2"/>
+                    </g>
             
-            
+                    <g>
+                        <circle style="fill:#2C9984;" cx="250.8" cy="121.2" r="13.2"/>
+                        <circle style="fill:#2C9984;" cx="250.8" cy="382" r="13.2"/>
+                        <circle style="fill:#2C9984;" cx="381.6" cy="251.6" r="13.2"/>
+                        <circle style="fill:#2C9984;" cx="120.4" cy="251.6" r="13.2"/>
+                    </g>
+                </svg>
+            </div>
+            <div id="joy2Div" class="joystick-control"></div>
         </div>
+    <script>
         
-        <div class="joystick-input">
-            <h2>Gupppy Input</h2>
-
-            <div class="joystick-input-column">
-                <div class="joystick-input-column-column">
-                    <div>
-                        <label >Roll:</label>
-                        <input id="roll-value" type="text"></label>
-                    </div>
-                    <div>
-                        <label >Pitch:</label>
-                        <input id="pitch-value" type="text"></label>
-                    </div>
-                    <div>
-                        <label >Yaw:</label>
-                        <input id="yaw-value-in" type="text"></label>
-                    </div>
-                    <div>
-                        <label >Depth:</label>
-                        <input id="depth-value" type="text"></label>
-                    </div>
-                </div>
-                <div class="joystick-input-column-column">
-                    <div>
-                        <label >Water:</label>
-                        <input id="water-value" type="text"></label>
-                    </div>
-                    <div>
-                        <label >Volt:</label>
-                        <input id="volt-value" type="text"></label>
-                    </div>
-                    <div>
-                        <label >Amp:</label>
-                        <input id="amp-value" type="text"></label>
-                    </div>
-                </div>
-            </div>
-            
-            
-        </div>
-
-        <div id="joy2Div"></div>
-    </div>
-
+      </script>
     <script src="assets/js/joy.min.js"></script>
     <script src="assets/js/joystick.js"></script>
 </body>

@@ -4,7 +4,17 @@ var yaw_value =0;
 var heave_value =0;
 let isConnected = false; // Track connection status
 let ws; // WebSocket variable
+function rotateCompass(degrees) {
+    document.documentElement.style.setProperty('--rotation-angle', degrees -45 + 'deg');
+  }
+function setGaugeValue(value, element, min = -200, max = 200) {
+// Limit the value to the -400 to 400 range
+value = Math.max(min, Math.min(max, value));
 
+// Map value (-400 to 400) to degrees (-90 to 90)
+let degrees = ((value + max) / (max*2)) * 180 - 90;
+document.documentElement.style.setProperty(element, degrees + 'deg');
+}
 var Joy1 = new JoyStick('joy1Div', {}, function(stickData) {
     // console.log(stickData.xPosition);
     // console.log(stickData.yPosition);
@@ -16,29 +26,34 @@ var Joy1 = new JoyStick('joy1Div', {}, function(stickData) {
     heave_value=stickData.y*2;
 
     if(yaw_value > 200){
-        document.getElementById("yaw-value-out").value=200;
+        // document.getElementById("yaw-value-out").value=200;
         yaw_value=200;
     }else if(yaw_value < -200){
-        document.getElementById("yaw-value-out").value=-200;
+        // document.getElementById("yaw-value-out").value=-200;
         yaw_value=-200;
 
     }else{
-        document.getElementById("yaw-value-out").value = yaw_value;
+        // document.getElementById("yaw-value-out").value = yaw_value;
     }
 
     if(heave_value > 200){
-        document.getElementById("heave-value").value=200;
+        // document.getElementById("heave-value").value=200;
         heave_value=200;
     }else if(heave_value < -200){
-        document.getElementById("heave-value").value=-200;
+        // document.getElementById("heave-value").value=-200;
         heave_value=-200;
 
     }else{
-        document.getElementById("heave-value").value = heave_value;
+        // document.getElementById("heave-value").value = heave_value;
     }
-    sendData();
+    setGaugeValue(yaw_value,"--pointer-rotation-yaw"),min=-100,max=100;
+    setGaugeValue(heave_value,"--pointer-rotation-heave");
 
+
+
+    sendData();
 });
+
 var Joy2 = new JoyStick('joy2Div', {}, function(stickData) {
     // console.log(stickData.xPosition);
     // console.log(stickData.yPosition);
@@ -50,30 +65,33 @@ var Joy2 = new JoyStick('joy2Div', {}, function(stickData) {
     surge_value=stickData.y*2;
 
     if(sway_value > 200){
-        document.getElementById("sway-value").value=200;
+        // document.getElementById("sway-value").value=200;
         sway_value=200;
     }else if(sway_value < -200){
-        document.getElementById("sway-value").value=-200;
+        // document.getElementById("sway-value").value=-200;
         sway_value=-200;
 
     }else{
-        document.getElementById("sway-value").value = sway_value;
+        // document.getElementById("sway-value").value = sway_value;
     }
 
     if(surge_value > 200){
-        document.getElementById("surge-value").value=200;
+        // document.getElementById("surge-value").value=200;
         surge_value=200;
 
     }else if(surge_value < -200){
-        document.getElementById("surge-value").value=-200;
+        // document.getElementById("surge-value").value=-200;
         surge_value=-200;
 
     }else{
-        document.getElementById("surge-value").value = surge_value;
+        // document.getElementById("surge-value").value = surge_value;
     }
+    setGaugeValue(surge_value,"--pointer-rotation-surge");
+    setGaugeValue(sway_value,"--pointer-rotation-sway");
     sendData();
 
 });
+
 
 // Function to connect or disconnect from the WebSocket server
 function toggleWebSocket() {
@@ -100,16 +118,18 @@ function toggleWebSocket() {
         // Handle incoming messages
         ws.onmessage = (event) => {
             const receivedData = JSON.parse(event.data);
-            console.log('Received:', receivedData);
+            // console.log('Received:', receivedData);
 
             // document.getElementById('receivedmessages').textContent = receivedMessage;
-            document.getElementById('roll-value').value = receivedData.msg.roll;
-            document.getElementById('pitch-value').value = receivedData.msg.pitch;
-            document.getElementById('yaw-value-in').value = receivedData.msg.yaw;
-            document.getElementById('depth-value').value = receivedData.msg.depth;
-            document.getElementById('water-value').value = receivedData.msg.water;
-            document.getElementById('volt-value').value = receivedData.msg.volt;
-            document.getElementById('amp-value').value = receivedData.msg.amp;
+            // document.getElementById('roll-value').value = receivedData.msg.roll;
+            // document.getElementById('pitch-value').value = receivedData.msg.pitch;
+            // document.getElementById('yaw-value-in').value = receivedData.msg.yaw;
+            // document.getElementById('depth-value').value = receivedData.msg.depth;
+            // document.getElementById('water-value').value = receivedData.msg.water;
+            // document.getElementById('volt-value').value = receivedData.msg.volt;
+            // document.getElementById('amp-value').value = receivedData.msg.amp;
+            rotateCompass(receivedData.msg.yaw);
+
         };
 
         // Handle connection closure
@@ -127,12 +147,12 @@ function toggleWebSocket() {
 // Function to send data to the server
 function sendData() {
     if (ws && ws.readyState === WebSocket.OPEN) {
-        const s1 = parseInt(document.getElementById('s1Input').value) || 0;
-        const s2 = parseInt(document.getElementById('s2Input').value) || 0;
-        const o1 = parseInt(document.getElementById('o1Input').value) || 0;
-        const o2 = parseInt(document.getElementById('o2Input').value) || 0;
-        const o3 = parseInt(document.getElementById('o3Input').value) || 0;
-        const o4 = parseInt(document.getElementById('o4Input').value) || 0;
+        // const s1 = parseInt(document.getElementById('s1Input').value) || 0;
+        // const s2 = parseInt(document.getElementById('s2Input').value) || 0;
+        // const o1 = parseInt(document.getElementById('o1Input').value) || 0;
+        // const o2 = parseInt(document.getElementById('o2Input').value) || 0;
+        // const o3 = parseInt(document.getElementById('o3Input').value) || 0;
+        // const o4 = parseInt(document.getElementById('o4Input').value) || 0;
 
         const data = {
             op: "publish",
@@ -156,3 +176,6 @@ function sendData() {
     }
 }
 document.getElementById('connectButton').onclick = toggleWebSocket;
+
+// JavaScript function to rotate the compass
+
