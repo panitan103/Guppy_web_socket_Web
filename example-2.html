@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Control with WebSocket</title>
+    <link rel="stylesheet" href="assets/css/example-style-2.css">
+</head>
+<body>
+    <h1>WebSocket Button Control</h1>
+
+    <div class="button-container">
+        <div class="left-group">
+            <h4>Left Controls</h4>
+            <div class="control">
+                <button class="control-button" id="heaveUp">↑ Heave</button>
+                <button class="control-button" id="heaveDown">↓ Heave</button>
+            </div>
+
+            <div class="control">
+                <button class="control-button" id="yawLeft">← Yaw</button>
+                <button class="control-button" id="yawRight">→ Yaw</button>
+            </div>
+            <div>Heave: <span id="heaveValue">0</span></div>
+            <div>Yaw: <span id="yawValue">0</span></div>
+        </div>
+
+        <div>
+            <button id="resetButton">Reset Values</button>
+        </div>
+
+
+        <div class="right-group">
+            <h4>Right Controls</h4>
+            <div class="control">
+                <button class="control-button" id="surgeUp">↑ Surge</button>
+                <button class="control-button" id="surgeDown">↓ Surge</button>
+            </div>
+            <div class="control">
+                <button class="control-button" id="swayLeft">← Sway</button>
+                <button class="control-button" id="swayRight">→ Sway</button>
+            </div>
+            <div>Surge: <span id="surgeValue">0</span></div>
+            <div>Sway: <span id="swayValue">0</span></div>
+        </div>
+        
+    </div>
+    
+    <div class="info-container">
+        <div class="connection-container">
+            <input type="text" id="wsUrl" placeholder="WebSocket URL" value="ws://10.0.0.112:9090">
+            <button id="connectButton">Connect</button>
+            <div id="ledIndicator" class="led-off"></div>
+        </div>
+        
+        
+        <div class="inputs-container">
+            <div>
+                <label for="s1Input">S1:</label>
+                <input type="number" id="s1Input" value="0">
+            </div>
+            <div>
+                <label for="s2Input">S2:</label>
+                <input type="number" id="s2Input" value="0">
+            </div>
+            <div>
+                <label for="o1Input">O1:</label>
+                <input type="number" id="o1Input" value="0">
+            </div>
+            <div>
+                <label for="o2Input">O2:</label>
+                <input type="number" id="o2Input" value="0">
+            </div>
+            <div>
+                <label for="o3Input">O3:</label>
+                <input type="number" id="o3Input" value="0">
+            </div>
+            <div>
+                <label for="o4Input">O4:</label>
+                <input type="number" id="o4Input" value="0">
+            </div>
+        </div>
+        <pre id="sendmessages"></pre>
+        <pre id="receivedmessages"></pre>
+        
+    </div>
+
+
+    <script src="assets/js/example-2.js"></script>
+</body>
+</html>

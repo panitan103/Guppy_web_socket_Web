@@ -1,0 +1,76 @@
+#joy1Div {
+    width: 200px;
+    height: 200px;
+    margin:  20px;
+    margin-left: 0; 
+    margin-right: auto;
+
+    /* for debug */
+    /* border: 3px solid red; */
+
+}
+#joy2Div {
+    width: 200px;
+    height: 200px;
+    margin:  20px;
+    margin-left: auto; 
+    margin-right: 0;
+
+    /* for debug */
+    /* border: 3px solid red; */
+
+}
+.joystick{
+    display:flex;
+    align-items: right;
+    justify-items: center;
+
+    /* for debug */
+    /* border: 10px solid ; */
+}
+
+.joystick-output, .joystick-input{
+    margin: 20px;
+    align-items: center;
+    justify-items: center;
+    /* for debug */
+    border: 10px solid ;
+
+ 
+}
+.joystick-output-column input{
+    width: 50px;
+}
+.joystick-input-column input{
+    width: 50px;
+}
+.joystick-output-column, .joystick-input-column{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 20px;
+
+    /* for debug */
+    /* border: 10px solid ; */
+}
+.connection-container {
+    display: flex;
+    align-items: center; /* Align items vertically centered */
+    margin-top: 10px; /* Space above the connection controls */
+    flex: 1; /* Allow connection container to grow */
+}
+#ledIndicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-left: 10px; /* Space between button and LED */
+    transition: background-color 0.3s ease;
+}
+
+.led-on {
+    background-color: green; /* Color when connected */
+}
+
+.led-off {
+    background-color: red; /* Color when disconnected */
+}

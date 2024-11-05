@@ -1,91 +1,119 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Button Control with WebSocket</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <title>Guppy WebSocket Communication</title>
+    <link rel="stylesheet" href="assets/css/joystick.css"> <!-- Link to the CSS file -->
+
 </head>
 <body>
-    <h1>WebSocket Button Control</h1>
-
-    <div class="button-container">
-        <div class="left-group">
-            <h4>Left Controls</h4>
-            <div class="control">
-                <button class="control-button" id="heaveUp">↑ Heave</button>
-                <button class="control-button" id="heaveDown">↓ Heave</button>
-            </div>
-
-            <div class="control">
-                <button class="control-button" id="yawLeft">← Yaw</button>
-                <button class="control-button" id="yawRight">→ Yaw</button>
-            </div>
-            <div>Heave: <span id="heaveValue">0</span></div>
-            <div>Yaw: <span id="yawValue">0</span></div>
-        </div>
-
-        <div>
-            <button id="resetButton">Reset Values</button>
-        </div>
-
-
-        <div class="right-group">
-            <h4>Right Controls</h4>
-            <div class="control">
-                <button class="control-button" id="surgeUp">↑ Surge</button>
-                <button class="control-button" id="surgeDown">↓ Surge</button>
-            </div>
-            <div class="control">
-                <button class="control-button" id="swayLeft">← Sway</button>
-                <button class="control-button" id="swayRight">→ Sway</button>
-            </div>
-            <div>Surge: <span id="surgeValue">0</span></div>
-            <div>Sway: <span id="swayValue">0</span></div>
-        </div>
-        
+    <h1>Guppy WebSocket</h1>
+    <div class="connection-container">
+        <input type="text" id="wsUrl" placeholder="WebSocket URL" value="ws://10.0.0.112:9090">
+        <button id="connectButton">Connect</button>
+        <div id="ledIndicator" class="led-off"></div>
     </div>
+    <div class="joystick">
+        <div id="joy1Div" ></div>
     
-    <div class="info-container">
-        <div class="connection-container">
-            <input type="text" id="wsUrl" placeholder="WebSocket URL" value="ws://10.0.0.112:9090">
-            <button id="connectButton">Connect</button>
-            <div id="ledIndicator" class="led-off"></div>
+        <div class="joystick-output">
+            <h2>Gupppy Output</h2>
+            <div class="joystick-output-column">
+                <div>
+                    <div>
+                        <label >Surge:</label>
+                        <input id="surge-value" type="text"></label>
+                    </div>
+                    <div>
+                        <label >Sway:</label>
+                        <input id="sway-value" type="text"></label>
+                    </div>
+                    <div>
+                        <label >Yaw:</label>
+                        <input id="yaw-value-out" type="text"></label>
+                    </div>
+                    <div>
+                        <label >Heave:</label>
+                        <input id="heave-value" type="text"></label>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label >S1:</label>
+                        <input id="s1Input" type="text"></label>
+                    </div>
+                    <div>
+                        <label >S2:</label>
+                        <input id="s2Input" type="text"></label>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label >O1:</label>
+                        <input id="o1Input" type="text"></label>
+                    </div>
+                    <div>
+                        <label >O2:</label>
+                        <input id="o2Input" type="text"></label>
+                    </div>
+                    <div>
+                        <label >O3:</label>
+                        <input id="o3Input" type="text"></label>
+                    </div>
+                    <div>
+                        <label >O4:</label>
+                        <input id="o4Input" type="text"></label>
+                    </div>
+                </div>
+            </div>
+            
+            
         </div>
         
-        
-        <div class="inputs-container">
-            <div>
-                <label for="s1Input">S1:</label>
-                <input type="number" id="s1Input" value="0">
+        <div class="joystick-input">
+            <h2>Gupppy Input</h2>
+
+            <div class="joystick-input-column">
+                <div>
+                    <div>
+                        <label >Roll:</label>
+                        <input id="roll-value" type="text"></label>
+                    </div>
+                    <div>
+                        <label >Pitch:</label>
+                        <input id="pitch-value" type="text"></label>
+                    </div>
+                    <div>
+                        <label >Yaw:</label>
+                        <input id="yaw-value-in" type="text"></label>
+                    </div>
+                    <div>
+                        <label >Depth:</label>
+                        <input id="depth-value" type="text"></label>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <label >Water:</label>
+                        <input id="water-value" type="text"></label>
+                    </div>
+                    <div>
+                        <label >Volt:</label>
+                        <input id="volt-value" type="text"></label>
+                    </div>
+                    <div>
+                        <label >Amp:</label>
+                        <input id="amp-value" type="text"></label>
+                    </div>
+                </div>
             </div>
-            <div>
-                <label for="s2Input">S2:</label>
-                <input type="number" id="s2Input" value="0">
-            </div>
-            <div>
-                <label for="o1Input">O1:</label>
-                <input type="number" id="o1Input" value="0">
-            </div>
-            <div>
-                <label for="o2Input">O2:</label>
-                <input type="number" id="o2Input" value="0">
-            </div>
-            <div>
-                <label for="o3Input">O3:</label>
-                <input type="number" id="o3Input" value="0">
-            </div>
-            <div>
-                <label for="o4Input">O4:</label>
-                <input type="number" id="o4Input" value="0">
-            </div>
+            
+            
         </div>
-        <pre id="sendmessages"></pre>
-        <pre id="receivedmessages"></pre>
-        
+
+        <div id="joy2Div"></div>
     </div>
 
-
+    <script src="assets/js/joy.min.js"></script>
     <script src="assets/js/joystick.js"></script>
 </body>
-</html>

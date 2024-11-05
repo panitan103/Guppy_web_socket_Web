@@ -1,15 +1,75 @@
-let ws; // WebSocket variable
+var surge_value =0 ;
+var sway_value =0;
+var yaw_value =0;
+var heave_value =0;
 let isConnected = false; // Track connection status
+let ws; // WebSocket variable
 
-const heaveValue = document.getElementById('heaveValue');
-const yawValue = document.getElementById('yawValue');
-const surgeValue = document.getElementById('surgeValue');
-const swayValue = document.getElementById('swayValue');
+var Joy1 = new JoyStick('joy1Div', {}, function(stickData) {
+    // console.log(stickData.xPosition);
+    // console.log(stickData.yPosition);
+    // console.log(stickData.cardinalDirection);
+    // console.log(stickData.x);
+    // console.log(stickData.y);
 
-let heave = 0;
-let yaw = 0;
-let surge = 0;
-let sway = 0;
+    yaw_value=stickData.x*2;
+    heave_value=stickData.y*2;
+
+    if(yaw_value > 200){
+        document.getElementById("yaw-value-out").value=200;
+        yaw_value=200;
+    }else if(yaw_value < -200){
+        document.getElementById("yaw-value-out").value=-200;
+        yaw_value=-200;
+
+    }else{
+        document.getElementById("yaw-value-out").value = yaw_value;
+    }
+
+    if(heave_value > 200){
+        document.getElementById("heave-value").value=200;
+        heave_value=200;
+    }else if(heave_value < -200){
+        document.getElementById("heave-value").value=-200;
+        heave_value=-200;
+
+    }else{
+        document.getElementById("heave-value").value = heave_value;
+    }
+    sendData();
+
+});
+var Joy2 = new JoyStick('joy2Div', {}, function(stickData) {
+    // console.log(stickData.xPosition);
+    // console.log(stickData.yPosition);
+    // console.log(stickData.cardinalDirection);
+    // console.log(stickData.x);
+    // console.log(stickData.y);
+
+    sway_value=stickData.x*2;
+    surge_value=stickData.y*2;
+
+    if(sway_value > 200){
+        document.getElementById("sway-value").value=200;
+    }else if(sway_value < -200){
+        document.getElementById("sway-value").value=-200;
+
+    }else{
+        document.getElementById("sway-value").value = sway_value;
+    }
+
+    if(surge_value > 200){
+        document.getElementById("surge-value").value=200;
+
+    }else if(surge_value < -200){
+        document.getElementById("surge-value").value=-200;
+
+    }else{
+        document.getElementById("surge-value").value = surge_value;
+    }
+    sendData();
+
+});
 
 // Function to connect or disconnect from the WebSocket server
 function toggleWebSocket() {
@@ -37,14 +97,15 @@ function toggleWebSocket() {
         ws.onmessage = (event) => {
             const receivedData = JSON.parse(event.data);
             console.log('Received:', receivedData);
-            const receivedMessage = `Roll: ${receivedData.msg.roll}, 
-Pitch: ${receivedData.msg.pitch} 
-Yaw: ${receivedData.msg.yaw}
-Depth: ${receivedData.msg.depth}
-Water: ${receivedData.msg.water}
-Volt: ${receivedData.msg.volt}
-Amp: ${receivedData.msg.amp}`;
-            document.getElementById('receivedmessages').textContent = receivedMessage;
+
+            // document.getElementById('receivedmessages').textContent = receivedMessage;
+            document.getElementById('roll-value').value = receivedData.msg.roll;
+            document.getElementById('pitch-value').value = receivedData.msg.pitch;
+            document.getElementById('yaw-value-in').value = receivedData.msg.yaw;
+            document.getElementById('depth-value').value = receivedData.msg.depth;
+            document.getElementById('water-value').value = receivedData.msg.water;
+            document.getElementById('volt-value').value = receivedData.msg.volt;
+            document.getElementById('amp-value').value = receivedData.msg.amp;
         };
 
         // Handle connection closure
@@ -59,7 +120,6 @@ Amp: ${receivedData.msg.amp}`;
         ws.close(); // Close the WebSocket connection
     }
 }
-
 // Function to send data to the server
 function sendData() {
     if (ws && ws.readyState === WebSocket.OPEN) {
@@ -74,10 +134,10 @@ function sendData() {
             op: "publish",
             topic: "/Guppy_Transmitted",
             msg: {
-                heave: heave,
-                yaw: yaw,
-                surge: surge,
-                sway: sway,
+                heave: heave_value,
+                yaw: yaw_value,
+                surge: surge_value,
+                sway: sway_value,
                 s1: s1,
                 s2: s2,
                 o1: o1,
@@ -87,82 +147,8 @@ function sendData() {
             }
         };
         ws.send(JSON.stringify(data));
-        const formattedValues = `Heave=${data.msg.heave}, Yaw=${data.msg.yaw}, Surge=${data.msg.surge}, Sway=${data.msg.sway}, S1=${s1}, S2=${s2}, O1=${o1}, O2=${o2}, O3=${o3}, O4=${o4}`;
-        document.getElementById('sendmessages').textContent = `Sent: ${formattedValues}`;
+        // const formattedValues = `Heave=${data.msg.heave}, Yaw=${data.msg.yaw}, Surge=${data.msg.surge}, Sway=${data.msg.sway}, S1=${s1}, S2=${s2}, O1=${o1}, O2=${o2}, O3=${o3}, O4=${o4}`;
+        // document.getElementById('sendmessages').textContent = `Sent: ${formattedValues}`;
     }
 }
-
-// Button click handlers
-document.getElementById('heaveUp').onclick = () => {
-    heave += 5; // Increment heave by 5
-    heaveValue.textContent = heave;
-    sendData(); // Send data on button click
-};
-
-document.getElementById('heaveDown').onclick = () => {
-    heave -= 5; // Decrement heave by 5
-    heaveValue.textContent = heave;
-    sendData(); // Send data on button click
-};
-
-document.getElementById('yawLeft').onclick = () => {
-    yaw -= 5; // Decrement yaw by 5
-    yawValue.textContent = yaw;
-    sendData(); // Send data on button click
-};
-
-document.getElementById('yawRight').onclick = () => {
-    yaw += 5; // Increment yaw by 5
-    yawValue.textContent = yaw;
-    sendData(); // Send data on button click
-};
-
-document.getElementById('surgeUp').onclick = () => {
-    surge += 5; // Increment surge by 5
-    surgeValue.textContent = surge;
-    sendData(); // Send data on button click
-};
-
-document.getElementById('surgeDown').onclick = () => {
-    surge -= 5; // Decrement surge by 5
-    surgeValue.textContent = surge;
-    sendData(); // Send data on button click
-};
-
-document.getElementById('swayLeft').onclick = () => {
-    sway -= 5; // Decrement sway by 5
-    swayValue.textContent = sway;
-    sendData(); // Send data on button click
-};
-
-document.getElementById('swayRight').onclick = () => {
-    sway += 5; // Increment sway by 5
-    swayValue.textContent = sway;
-    sendData(); // Send data on button click
-};
-
-// Reset button handler
-document.getElementById('resetButton').onclick = () => {
-    heave = 0;
-    yaw = 0;
-    surge = 0;
-    sway = 0;
-
-    heaveValue.textContent = heave;
-    yawValue.textContent = yaw;
-    surgeValue.textContent = surge;
-    swayValue.textContent = sway;
-
-    // Reset the input fields
-    document.getElementById('s1Input').value = 0;
-    document.getElementById('s2Input').value = 0;
-    document.getElementById('o1Input').value = 0;
-    document.getElementById('o2Input').value = 0;
-    document.getElementById('o3Input').value = 0;
-    document.getElementById('o4Input').value = 0;
-
-    sendData(); // Send data on reset
-};
-
-// Connect or disconnect WebSocket when the connect button is clicked
 document.getElementById('connectButton').onclick = toggleWebSocket;
