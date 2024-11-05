@@ -29,7 +29,7 @@ var Joy1 = new JoyStick('joy1Div', joy_parameter, function(stickData) {
     // console.log(stickData.cardinalDirection);
     // console.log(stickData.x);
     // console.log(stickData.y);
-    yaw_value=stickData.x;
+    yaw_value=stickData.x*1;
     heave_value=stickData.y*2;
     
 
