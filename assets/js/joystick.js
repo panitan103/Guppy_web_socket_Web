@@ -29,16 +29,16 @@ var Joy1 = new JoyStick('joy1Div', joy_parameter, function(stickData) {
     // console.log(stickData.cardinalDirection);
     // console.log(stickData.x);
     // console.log(stickData.y);
-    yaw_value=stickData.x*2;
+    yaw_value=stickData.x;
     heave_value=stickData.y*2;
     
 
-    if(yaw_value > 200){
+    if(yaw_value > 100){
         // document.getElementById("yaw-value-out").value=200;
-        yaw_value=200;
-    }else if(yaw_value < -200){
+        yaw_value=100;
+    }else if(yaw_value < -100){
         // document.getElementById("yaw-value-out").value=-200;
-        yaw_value=-200;
+        yaw_value=-100;
 
     }else{
         // document.getElementById("yaw-value-out").value = yaw_value;
